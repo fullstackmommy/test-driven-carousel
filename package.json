@@ -29,5 +29,8 @@
     "eslint-plugin-react": "^7.19.0",
     "jest": "^25.4.0",
     "prettier-eslint-cli": "^5.0.0"
+  },
+  "jest": {
+    "setupFilesAfterEnv": "./src/setupTests.js"
   }
 }
