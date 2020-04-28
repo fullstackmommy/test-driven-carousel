@@ -65,4 +65,18 @@ describe('Img', () => {
   it('should render an img with the given src', () => {
     expect(mounted.containsMatchingElement(<img src={imgUrl} />)).toBe(true);
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should use imgHeight as the height style property', () => {
+    expect(mounted).toHaveStyleRule('height', '500px');
+    mounted.setProps({ imgHeight: 'calc(100vh - 100px)' });
+    expect(mounted).toHaveStyleRule('height', 'calc(100vh - 100px)');
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should have the expected static styles ', () => {
+    //unable to test, TypeError: expect(...).toHaveStyleRule is not a function
+    expect(mounted).toHaveStyleRule('width', '100%');
+    expect(mounted).toHaveStyleRule('object-fit', 'cover');
+  });
 });
