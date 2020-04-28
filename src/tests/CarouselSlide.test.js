@@ -35,7 +35,7 @@ describe('CarouselSlide', () => {
     const attribution = 'An Attribution';
     wrapper.setProps({ description, attribution });
     expect(wrapper.find('figcaption').text()).toBe(
-      `${description}${attribution}`
+      `${description} ${attribution}`
     );
     expect(wrapper.find('figcaption strong').text()).toBe(description);
   });
