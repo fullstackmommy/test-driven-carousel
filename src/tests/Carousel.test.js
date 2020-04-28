@@ -3,6 +3,7 @@ import { shallow } from "enzyme";
 import Carousel from "../Carousel";
 import CarouselButton from "../CarouselButton";
 import CarouselSlide from "../CarouselSlide";
+import { wrap } from "module";
 
 describe("Carousel", () => {
   let wrapper;
@@ -53,6 +54,24 @@ describe("Carousel", () => {
         .at(1)
         .prop("children")
     ).toBe("Next");
+  });
+
+  it("should pass defaultImg and defaultImgHeight to the CarouselSlide", () => {
+    const defaultImg = () => "test";
+    const defaultImgHeight = 1234;
+    wrapper.setProps({ defaultImg, defaultImgHeight });
+    expect(wrapper.find(CarouselSlide).prop("Img")).toBe(defaultImg);
+    expect(wrapper.find(CarouselSlide).prop("imgHeight")).toBe(
+      defaultImgHeight
+    );
+  });
+
+  it("should allow individual slides to override Img and imgHeight", () => {
+    const Img = () => "test";
+    const imgHeight = 1234;
+    wrapper.setProps({ slides: [{ ...slides[0], Img, imgHeight }] });
+    expect(wrapper.find(CarouselSlide).prop("Img")).toBe(Img);
+    expect(wrapper.find(CarouselSlide).prop("imgHeight")).toBe(imgHeight);
   });
 
   describe("with a middle slide selected", () => {
