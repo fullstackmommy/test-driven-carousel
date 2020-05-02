@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CarouselSlide should render correctly 1`] = `ShallowWrapper {}`;
+
+exports[`Img should render correctly 1`] = `ReactWrapper {}`;

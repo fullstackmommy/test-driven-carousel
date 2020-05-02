@@ -14,30 +14,13 @@ describe('CarouselSlide', () => {
     );
   });
 
-  it('should render a <figure>', () => {
-    expect(wrapper.type()).toBe('figure');
-  });
+  it('should render correctly', () => {
+    wrapper.setProps({
+      description: 'Description',
+      attribution: 'Attribution',
+    });
 
-  it('should render props.Img and a <figcaption> as children', () => {
-    expect(wrapper.childAt(0).type()).toBe(CarouselSlide.defaultProps.Img);
-    expect(wrapper.childAt(1).type()).toBe('figcaption');
-  });
-
-  it('should pass imgUrl through to the <img>', () => {
-    const imgUrl = 'https://example.com/image.png';
-    wrapper.setProps({ imgUrl });
-    const img = wrapper.find(CarouselSlide.defaultProps.Img);
-    expect(img.prop('src')).toBe(imgUrl);
-  });
-
-  it('should use description and attribution as the <figcaption>', () => {
-    const description = 'Description';
-    const attribution = 'An Attribution';
-    wrapper.setProps({ description, attribution });
-    expect(wrapper.find('figcaption').text()).toBe(
-      `${description} ${attribution}`
-    );
-    expect(wrapper.find('figcaption strong').text()).toBe(description);
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('should pass other props through to the <figure>', () => {
@@ -62,8 +45,8 @@ describe('Img', () => {
     mounted = mount(<Img src={imgUrl} imgHeight={500} />);
   });
 
-  it('should render an img with the given src', () => {
-    expect(mounted.containsMatchingElement(<img src={imgUrl} />)).toBe(true);
+  it('should render correctly', () => {
+    expect(mounted.find('img')).toMatchSnapshot();
   });
 
   // eslint-disable-next-line jest/no-disabled-tests
@@ -71,12 +54,5 @@ describe('Img', () => {
     expect(mounted).toHaveStyleRule('height', '500px');
     mounted.setProps({ imgHeight: 'calc(100vh - 100px)' });
     expect(mounted).toHaveStyleRule('height', 'calc(100vh - 100px)');
-  });
-
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should have the expected static styles ', () => {
-    //unable to test, TypeError: expect(...).toHaveStyleRule is not a function
-    expect(mounted).toHaveStyleRule('width', '100%');
-    expect(mounted).toHaveStyleRule('object-fit', 'cover');
   });
 });
