@@ -17,8 +17,37 @@ describe('HasIndex()', () => {
     wrapper = shallow(<MockComponentWithIndex />);
   });
 
-  it('should have an initial index state of 0', () => {
+  it('should have an initial index state equal to the defaultIndex prop', () => {
     expect(wrapper.state('index')).toBe(0);
+    const wrapper2 = shallow(<MockComponentWithIndex defaultIndex={1} />);
+    expect(wrapper2.state('index')).toBe(1);
+  });
+
+  it('should always have index state equal to the index prop', () => {
+    const wrapperWithInitialIndex = shallow(
+      <MockComponentWithIndex index={1} />
+    );
+    expect(wrapperWithInitialIndex.state('index')).toBe(1);
+    wrapper.setProps({ index: 2 });
+    expect(wrapper.state('index')).toBe(2);
+  });
+
+  it('should allow index state to change if the index prop is unset', () => {
+    const wrapperWithInitialIndex = shallow(
+      <MockComponentWithIndex index={1} />
+    );
+    wrapperWithInitialIndex.setProps({ index: undefined });
+    wrapperWithInitialIndex.setState({ index: 3 });
+    expect(wrapperWithInitialIndex.state('index')).toBe(3);
+  });
+
+  it('should call onIndexChange on decrement/increment', () => {
+    const onIndexChange = jest.fn();
+    wrapper.setProps({ index: 0, onIndexChange });
+    wrapper.prop('indexDecrement')(3);
+    expect(onIndexChange).toHaveBeenCalledWith({ target: { value: 2 } });
+    wrapper.prop('indexIncrement')(3);
+    expect(onIndexChange).toHaveBeenCalledWith({ target: { value: 1 } });
   });
 
   it('should pass the index state down as the index prop', () => {
